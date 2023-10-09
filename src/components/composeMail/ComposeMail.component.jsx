@@ -3,7 +3,6 @@ import {Box, styled,Typography, InputBase, TextField,Button} from '@mui/material
 import {Delete,Close} from '@mui/icons-material';
 import { useState } from 'react';
 
-
 const dialogStyle = {
     height : '85%',
     width : '80%',
@@ -55,10 +54,27 @@ const ComposeMail = ({openMailbox, setOpenMailbox})=>{
 
     const [data , setData] = useState({});
 
+    // eslint-disable-next-line no-unused-vars
+    const sendingMail = async ()=>{
+        await fetch('https://mackerel-meet-wolf.ngrok-free.app/', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                subject:data.subject,
+                recepients:data.to,
+                body: data.body
+            })
+        }).then(res=>console.log("res",res));
+        
+    }
+
     const config = {
         Host : "smtp.elasticemail.com",
-        Username : "locoqoqe@socam.me",
-        Password : "A0F2CF52CC314BCB769AE40E379CC067547D",
+        Username : import.meta.env.VITE_USERNAME,
+        Password : import.meta.env.VITE_PASSWORD,
         Port : 2525
     }
 
